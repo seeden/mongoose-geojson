@@ -2,16 +2,6 @@
 
 var _ = require('underscore');
 
-var type = exports.type = {
-	POINT: 'Point',
-	LINE_STRING: 'LineString',
-	POLYGON: 'Polygon',
-
-	MULTI_POINT: 'MultiPoint',
-	MULTI_LINE_STRING: 'MultiLineString',
-	MULTI_POLYGON: 'MultiPolygon'
-};
-
 function prepareSubschema(type, required) {
 	type = type || _.values(type);
 
@@ -62,13 +52,23 @@ module.exports = function geoJSONPlugin (schema, options) {
 	return schema;
 };
 
+var type = module.exports.type = {
+	POINT: 'Point',
+	LINE_STRING: 'LineString',
+	POLYGON: 'Polygon',
+
+	MULTI_POINT: 'MultiPoint',
+	MULTI_LINE_STRING: 'MultiLineString',
+	MULTI_POLYGON: 'MultiPolygon'
+};
+
 
 /**
  * Validate point structure
  * @param  {Array}  point Point coordinates [longitude, latitude]
  * @return {Boolean}       [description]
  */
-var isPoint = exports.isPoint = function(point) {
+var isPoint = module.exports.isPoint = function(point) {
 	if(!_.isArray(point) || point.length !== 2 
 		|| !_.isNumber(point[0]) || !_.isNumber(point[1]) ) {
 		return false;
@@ -82,7 +82,7 @@ var isPoint = exports.isPoint = function(point) {
  * @param  {Array}  points Array of points [[longitude1, latitude1], [longitude2, latitude2]]
  * @return {Boolean}        
  */
-var arePoints = exports.arePoints = function(points) {
+var arePoints = module.exports.arePoints = function(points) {
 	if(!_.isArray(points) || points.length === 0) {
 		return false;
 	}
@@ -102,7 +102,7 @@ var arePoints = exports.arePoints = function(points) {
  * @param  {Array} point Point coordinates [longitude, latitude]
  * @return {Object}      Object that can be stored as location in mongodb
  */
-var createPoint = exports.createPoint = function(point) {
+var createPoint = module.exports.createPoint = function(point) {
 	if(!isPoint(point)) {
 		throw new Error('Point has no valid format');	
 	}
@@ -119,7 +119,7 @@ var createPoint = exports.createPoint = function(point) {
  * @param  {Array} point2 LAst point coordinates [longitude, latitude]
  * @return {Object}      Object that can be stored as location in mongodb
  */
-var createLineString = exports.createLineString = function(point1, point2) {
+var createLineString = module.exports.createLineString = function(point1, point2) {
 	if(!arePoints([point1, point2])) {
 		throw new Error('One of points has no valid format');	
 	}
@@ -135,7 +135,7 @@ var createLineString = exports.createLineString = function(point1, point2) {
  * @param  {Array} ring Array of points coordinates [longitude, latitude]
  * @return {Object}      Object that can be stored as location in mongodb
  */
-var createPolygon = exports.createPolygon = function(ring) {
+var createPolygon = module.exports.createPolygon = function(ring) {
 	if(!arePoints(ring)) {
 		throw new Error('One of points has no valid format');	
 	}
@@ -147,14 +147,14 @@ var createPolygon = exports.createPolygon = function(ring) {
 };
 
 
-var distanceMultiplier = exports.distanceMultiplier = 6378137;
+var distanceMultiplier = module.exports.distanceMultiplier = 6378137;
 
 /**
  * Convert meters to radians
  * @param  {Number} m Meters
  * @return {Number}   Radians
  */
-var meterToRadian = exports.meterToRadian = function(m) {
+var meterToRadian = module.exports.meterToRadian = function(m) {
 	return m/distanceMultiplier;
 };
 
@@ -164,7 +164,7 @@ var meterToRadian = exports.meterToRadian = function(m) {
  * @param  {Array} points Array of points
  * @return {Array}        Array of [top,left] coordinates and [bottom, right] coordinates
  */
-var polygonToBoundary = exports.polygonToBoundary = function(points) {
+var polygonToBoundary = module.exports.polygonToBoundary = function(points) {
 	var left = null,
 		right = null,
 		top = null,
@@ -192,7 +192,7 @@ var polygonToBoundary = exports.polygonToBoundary = function(points) {
  * @param  {Array} points Array of points
  * @return {Array}        Array of closed boundary points
  */
-var polygonToBoundaryPolygon = exports.polygonToBoundary = function(points) {
+var polygonToBoundaryPolygon = module.exports.polygonToBoundary = function(points) {
 	var boundary = polygonToBoundary(points);
 	var topLeft = boundary[0];
 	var bottomRight = boundary[1];
