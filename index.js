@@ -17,7 +17,7 @@ function prepareSubschema(type, required) {
 
 	var data = {
 		type        : { type: String },
-		coordinates : { type: []}
+		coordinates : []
 	};
 
 	if(typeof type === 'string') {
@@ -35,7 +35,6 @@ function prepareSubschema(type, required) {
 
 	if(required) {
 		data.type.required = true;
-		data.coordinates.required = true;
 	}
 
 	return data;

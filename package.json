@@ -1,6 +1,6 @@
 {
 	"name": "mongoose-geojson",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Mongoose geojson",
 	"author": {
 		"name": "Zlatko Fedor",
