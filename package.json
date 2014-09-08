@@ -1,0 +1,32 @@
+{
+	"name": "mongoose-geojson",
+	"version": "0.0.1",
+	"description": "Mongoose geojson",
+	"author": {
+		"name": "Zlatko Fedor",
+		"email": "zfedor@gmail.com",
+		"url": "http://www.cherrysro.com/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/seeden/mongoose-geojson.git"
+	},
+	"keywords": [
+		"mongoose",
+		"geojson"
+	],
+	"private": false,
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/MIT"
+		}
+	],
+	"main": "./lib/",
+	"engines": {
+		"node": ">= 0.10.0"
+	},
+	"dependencies": {
+		"underscore": "~1.7.0"
+	}
+}
