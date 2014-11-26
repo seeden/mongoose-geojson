@@ -12,16 +12,17 @@ function prepareSubschema(type, required) {
 
 	if(typeof type === 'string') {
 		data.type.default = type;
-	} else {
+	} else if(type && Array.isArray(type) && type.length) {
 		data.type.enum = type;
 		data.type.default = type[0];
 	}
 
+/*
 	if(type === 'Point') {
-		data.coordinates.push({ type: Number });
+		data.coordinates.push(Number);
 	} else {
-		data.coordinates.push({ type: [] });
-	}
+		data.coordinates.push({ type: [Number] });
+	}*/
 
 	if(required) {
 		data.type.required = true;
@@ -44,10 +45,12 @@ module.exports = function geoJSONPlugin (schema, options) {
 			sparse: true
 		};
 
-	var subSchema = prepareSubschema(type, required);
 
-	schema.path(path, subSchema);
-	schema.path(path).index(index);
+	var obj = {};
+	obj[path] = prepareSubschema(type, required);
+
+	schema.add(obj);
+	schema.index(path, index);
 
 	return schema;
 };
